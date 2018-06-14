@@ -833,6 +833,9 @@ NorFlashReadBlocks (
     return EFI_INVALID_PARAMETER;
   }
 
+  if (!Instance->DeviceBaseAddress)
+	  return EFI_INVALID_PARAMETER;
+
   // Get the address to start reading from
   StartAddress = GET_NOR_BLOCK_ADDRESS (Instance->RegionBaseAddress,
                                         Lba,
@@ -880,6 +883,8 @@ NorFlashRead (
                                         Instance->Media.BlockSize
                                        );
 
+  if (!Instance->DeviceBaseAddress)
+	  return EFI_INVALID_PARAMETER;
   // Put the device into Read Array mode
   SEND_NOR_COMMAND (Instance->DeviceBaseAddress, 0, P30_CMD_READ_ARRAY);
 
